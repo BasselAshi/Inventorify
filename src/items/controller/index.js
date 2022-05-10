@@ -1,4 +1,3 @@
-const config = require('../../../config');
 const schemes = require('../models/mongoose');
 
 module.exports.createItem = async (res, parameters) => {
@@ -22,4 +21,44 @@ module.exports.createItem = async (res, parameters) => {
       message: error,
     });
   }
+};
+
+module.exports.editItem = async (res, parameters) => {
+  const {
+    id,
+    name,
+    price
+  } = parameters;
+  
+  try {
+    const item = await schemes.Item.findById(id);
+
+    if (!item) {
+      return res.status(404).json('Item not found')
+    }
+
+    item.name = parameters.name;
+    item.price = parameters.price;
+    await item.save();
+
+    return res.status(201).json(item);
+  } catch (error) {
+    return res.status(400).json({
+      status: 400,
+      message: error,
+    });
+  }
+  
+  
+
+  // try {
+  //   const savedItem = await newItem.save();
+  //   return res.status(201).json(savedItem);
+
+  // } catch (error) {
+  //   return res.status(400).json({
+  //     status: 400,
+  //     message: error,
+  //   });
+  // }
 };

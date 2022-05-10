@@ -14,4 +14,12 @@ router.post(
   }
 );
 
+router.patch(
+  '/api/v1/',
+  validateSchemas.inputs(schemas.editItem, 'body'),
+  (req, res) => {
+    controller.editItem(res, req.body);
+  }
+);
+
 module.exports = router;
