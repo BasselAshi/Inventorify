@@ -16,6 +16,10 @@ const schemas = {
   deleteItem: Joi.object().keys({
     id: Joi.objectId()
   }),
+
+  getItem: Joi.object().keys({
+    id: Joi.objectId()
+  }),
 };
 
 module.exports = schemas;

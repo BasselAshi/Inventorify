@@ -30,4 +30,12 @@ router.delete(
   }
 );
 
+router.get(
+  '/api/v1/',
+  validateSchemas.inputs(schemas.getItem, 'body'),
+  (req, res) => {
+    controller.getItem(res, req.body);
+  }
+);
+
 module.exports = router;
