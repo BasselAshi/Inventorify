@@ -17,7 +17,6 @@ module.exports.createItem = async (res, parameters) => {
     return res.status(201).json(savedItem);
 
   } catch (error) {
-    console.log(error)
     return res.status(400).json({
       status: 400,
       message: error,
