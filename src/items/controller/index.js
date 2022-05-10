@@ -48,17 +48,25 @@ module.exports.editItem = async (res, parameters) => {
       message: error,
     });
   }
-  
-  
+};
 
-  // try {
-  //   const savedItem = await newItem.save();
-  //   return res.status(201).json(savedItem);
+module.exports.deleteItem = async (res, parameters) => {
+  const {
+    id
+  } = parameters;
+  
+  try {
+    const item = await schemes.Item.findByIdAndDelete(id);
 
-  // } catch (error) {
-  //   return res.status(400).json({
-  //     status: 400,
-  //     message: error,
-  //   });
-  // }
+    if (!item) {
+      return res.status(404).json('Item not found')
+    }
+
+    return res.status(201).json(true);
+  } catch (error) {
+    return res.status(400).json({
+      status: 400,
+      message: error,
+    });
+  }
 };

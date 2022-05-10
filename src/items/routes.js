@@ -22,4 +22,12 @@ router.patch(
   }
 );
 
+router.delete(
+  '/api/v1/',
+  validateSchemas.inputs(schemas.deleteItem, 'body'),
+  (req, res) => {
+    controller.deleteItem(res, req.body);
+  }
+);
+
 module.exports = router;

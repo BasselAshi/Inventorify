@@ -12,6 +12,10 @@ const schemas = {
     name: Joi.string().required(),
     price: Joi.number().required(),
   }),
+
+  deleteItem: Joi.object().keys({
+    id: Joi.objectId()
+  }),
 };
 
 module.exports = schemas;
