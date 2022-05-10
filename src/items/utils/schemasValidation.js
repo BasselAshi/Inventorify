@@ -8,17 +8,22 @@ const schemas = {
   }),
 
   editItem: Joi.object().keys({
-    id: Joi.objectId(),
+    id: Joi.objectId().required(),
     name: Joi.string().required(),
     price: Joi.number().required(),
   }),
 
   deleteItem: Joi.object().keys({
-    id: Joi.objectId()
+    id: Joi.objectId().required(),
+    comment: Joi.string()
+  }),
+
+  undeleteItem: Joi.object().keys({
+    id: Joi.objectId().required()
   }),
 
   getItem: Joi.object().keys({
-    id: Joi.objectId()
+    id: Joi.objectId().required()
   }),
 };
 

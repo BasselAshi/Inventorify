@@ -30,6 +30,14 @@ router.delete(
   }
 );
 
+router.patch(
+  '/api/v1/undelete',
+  validateSchemas.inputs(schemas.undeleteItem, 'body'),
+  (req, res) => {
+    controller.undeleteItem(res, req.body);
+  }
+);
+
 router.get(
   '/api/v1/',
   validateSchemas.inputs(schemas.getItem, 'body'),

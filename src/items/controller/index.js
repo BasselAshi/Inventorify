@@ -33,7 +33,7 @@ module.exports.editItem = async (res, parameters) => {
   try {
     const item = await schemes.Item.findById(id);
 
-    if (!item) {
+    if (!item || item.currentDeletion) {
       return res.status(404).json('Item not found')
     }
 
@@ -52,17 +52,52 @@ module.exports.editItem = async (res, parameters) => {
 
 module.exports.deleteItem = async (res, parameters) => {
   const {
-    id
+    id,
+    comment
   } = parameters;
   
   try {
-    const item = await schemes.Item.findByIdAndDelete(id);
-
-    if (!item) {
-      return res.status(404).json('Item not found')
+    const item = await schemes.Item.findById(id);
+    if (!item || item.currentDeletion) {
+      return res.status(404).json('Item not found');
     }
 
-    return res.status(201).json(true);
+    const newDeletion = schemes.ItemDeletion({
+      date: new Date(),
+      comment: parameters.comment,
+    });
+    item.currentDeletion = newDeletion;
+    item.deletionHistory.push(newDeletion);
+    
+    await item.save();
+
+    return res.status(200).json(true);
+  } catch (error) {
+    return res.status(400).json({
+      status: 400,
+      message: error,
+    });
+  }
+};
+
+module.exports.undeleteItem = async (res, parameters) => {
+  const {
+    id,
+  } = parameters;
+  
+  try {
+    const item = await schemes.Item.findById(id);
+    if (!item) {
+      return res.status(404).json('Item not found');
+    }
+    if (!item.currentDeletion) {
+      return res.status(400).json('Item is not deleted');
+    }
+
+    item.currentDeletion = null;
+    await item.save();
+
+    return res.status(200).json(true);
   } catch (error) {
     return res.status(400).json({
       status: 400,
@@ -79,7 +114,7 @@ module.exports.getItem = async (res, parameters) => {
   try {
     const item = await schemes.Item.findById(id);
 
-    if (!item) {
+    if (!item || item.currentDeletion) {
       return res.status(404).json('Item not found')
     }
 
