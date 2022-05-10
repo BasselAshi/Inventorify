@@ -1,6 +1,6 @@
 const config = require('../../../config');
+const schemes = require('../models/mongoose');
 
-// TODO: Item creation
 module.exports.createItem = async (res, parameters) => {
   const {
     id,
