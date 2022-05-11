@@ -1,5 +1,6 @@
 window.onload = async (event) => {
   await renderInventory();
+  document.getElementById('create_button').addEventListener('click', newItem);
 };
 
 async function renderInventory() {
@@ -7,39 +8,45 @@ async function renderInventory() {
   const inventory = await fetchInventory();
 
   inventory.forEach(item => {
-    const $container = document.createElement('div');
-    $container.setAttribute('id', `item_${item._id}`);
-
-    const $name = document.createElement('input');
-    $name.classList.add('item_name');
-    $name.setAttribute('default', item.name);
-    $name.value = item.name;
-    $name.disabled = true;
-
-    const $price = document.createElement('input');
-    $price.classList.add('item_price');
-    $price.setAttribute('default', item.price);
-    $price.value = item.price;
-    $price.disabled = true;
-
-    const $edit = document.createElement('button');
-    $edit.classList.add('item_edit');
-    $edit.setAttribute('edit', false);
-    $edit.innerText = 'Edit';
-    $edit.addEventListener('click', (e) => onEditClick(e, $container));
-
-    const $save = document.createElement('button');
-    $save.classList.add('item_save');
-    $save.innerText = 'Save';
-    $save.hidden = true;
-    $save.addEventListener('click', (e) => onSaveClick(e, $container, item._id));
-
-    $container.appendChild($name);
-    $container.appendChild($price);
-    $container.appendChild($edit);
-    $container.appendChild($save);
-    $inventory.appendChild($container);
+    $inventory.appendChild(renderItem(item));
   });
+}
+
+function renderItem(item) {
+  const $container = document.createElement('div');
+  $container.classList.add('item');
+  $container.setAttribute('id', `item_${item._id}`);
+
+  const $name = document.createElement('input');
+  $name.classList.add('item_name');
+  $name.setAttribute('default', item.name);
+  $name.value = item.name;
+  $name.disabled = true;
+
+  const $price = document.createElement('input');
+  $price.classList.add('item_price');
+  $price.setAttribute('default', item.price);
+  $price.value = item.price;
+  $price.disabled = true;
+
+  const $edit = document.createElement('button');
+  $edit.classList.add('item_edit');
+  $edit.setAttribute('edit', false);
+  $edit.innerText = 'Edit';
+  $edit.addEventListener('click', (e) => onEditClick(e, $container));
+
+  const $save = document.createElement('button');
+  $save.classList.add('item_save');
+  $save.innerText = 'Save';
+  $save.hidden = true;
+  $save.addEventListener('click', (e) => onSaveClick(e, $container, item._id));
+
+  $container.appendChild($name);
+  $container.appendChild($price);
+  $container.appendChild($edit);
+  $container.appendChild($save);
+  
+  return $container;
 }
 
 function onEditClick(e, $container) {
@@ -80,9 +87,31 @@ function toggleItemEdit($container, edit) {
   }
 }
 
+async function newItem() {
+  const name = document.getElementById('create_name').value;
+  const price = document.getElementById('create_price').value;
+  const newItem = await createItem(name, price)
+  
+  if (newItem.status == 422) {
+    alert(newItem.error);
+    return;
+  }
+  
+  document.getElementById('inventory').appendChild(renderItem(newItem));
+}
+
+async function createItem(name, price) {
+  const data = { name, price: parseInt(price) };
+  return (await fetch('/items/api/v1', { 
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })).json();
+}
+
 async function saveItem(id, name, price) {
   const data = { id, name, price: parseInt(price) };
-  const response = await fetch('/items/api/v1', { 
+  await fetch('/items/api/v1', { 
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)

@@ -10,3 +10,15 @@ h5.title {
     color: green;
     font-weight: bold;
 }
+
+.bassel {
+    color: blue;
+}
+
+#create {
+    padding: 15px 0;
+}
+
+.item {
+    margin-bottom: 5px;
+}
