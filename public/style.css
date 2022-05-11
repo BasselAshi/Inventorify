@@ -6,6 +6,15 @@ h5.title {
     margin-top: 0;
 }
 
+button, input {
+    padding: 5px 8px;
+    border-radius: 5px;
+}
+
+.item_name {
+    margin-right: 5px;
+}
+
 .shopify {
     color: green;
     font-weight: bold;
@@ -21,4 +30,36 @@ h5.title {
 
 .item {
     margin-bottom: 5px;
+}
+
+.item_delete, .item_delete_confirm {
+    background-color: lightcoral;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.item_delete_confirm {
+    background-color: red;
+    color: white;
+    margin-left: 5px;
+}
+
+.item_edit, .item_save {
+    margin-left: 5px;
+}
+
+.item_save {
+    background-color: lightgoldenrodyellow;
+}
+
+.deleted {
+    background-color: lightcoral;
+}
+
+.item_delete_undo {
+    background-color: yellow;
+}
+
+#create_button {
+    background-color: yellowgreen;
 }

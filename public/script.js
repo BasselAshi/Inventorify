@@ -41,10 +41,37 @@ function renderItem(item) {
   $save.hidden = true;
   $save.addEventListener('click', (e) => onSaveClick(e, $container, item._id));
 
+  const $delete = document.createElement('button');
+  $delete.classList.add('item_delete');
+  $delete.setAttribute('delete', false);
+  $delete.innerText = 'Delete';
+  $delete.addEventListener('click', (e) => onDeleteClick(e, $container));
+
+  const $deleteComment = document.createElement('input');
+  $deleteComment.classList.add('item_delete_comment');
+  $deleteComment.hidden = true;
+  $deleteComment.setAttribute('placeholder', 'enter a comment');
+
+  const $deleteConfirm = document.createElement('button');
+  $deleteConfirm.classList.add('item_delete_confirm');
+  $deleteConfirm.innerText = 'Confirm Deletion';
+  $deleteConfirm.hidden = true;
+  $deleteConfirm.addEventListener('click', (e) => onDeleteConfirmClick(e, $container, item._id));
+
+  const $deleteUndo = document.createElement('button');
+  $deleteUndo.classList.add('item_delete_undo');
+  $deleteUndo.innerText = 'Undo Delete';
+  $deleteUndo.hidden = true;
+  $deleteUndo.addEventListener('click', (e) => onDeleteUndoClick(e, $container, item._id));  
+
   $container.appendChild($name);
   $container.appendChild($price);
   $container.appendChild($edit);
   $container.appendChild($save);
+  $container.appendChild($delete);
+  $container.appendChild($deleteComment);
+  $container.appendChild($deleteConfirm);
+  $container.appendChild($deleteUndo);
   
   return $container;
 }
@@ -65,6 +92,26 @@ function onSaveClick(e, $container, id) {
   toggleItemEdit($container, currentState);
 }
 
+function onDeleteClick(e, $container) {
+  const currentState = e.target.getAttribute('delete') == 'true';
+  toggleItemEdit($container, false);
+  toggleItemEditVisibility($container, currentState);
+  toggleItemDelete($container, currentState);
+}
+
+async function onDeleteConfirmClick(e, $container, id) {
+  const comment = $container.getElementsByClassName('item_delete_comment')[0].value;
+  await deleteItem(id, comment);
+  toggleItemDelete($container, true);
+  toggleUndoItemDelete($container, true);
+}
+
+async function onDeleteUndoClick(e, $container, id) {
+  await undoItemDelete(id);
+  toggleUndoItemDelete($container, false);
+  $container.getElementsByClassName('item_delete_confirm')[0].hidden = true;
+}
+
 function toggleItemEdit($container, edit) {
   const $name = $container.getElementsByClassName('item_name')[0];
   $name.value = $name.getAttribute('default');
@@ -80,10 +127,58 @@ function toggleItemEdit($container, edit) {
   const $save = $container.getElementsByClassName('item_save')[0];
   $save.hidden = !edit;
 
+  const $delete = $container.getElementsByClassName('item_delete')[0];
+  $delete.hidden = edit;
+
   if (edit) {
     $edit.innerText = 'Cancel';
   } else {
     $edit.innerText = 'Edit';
+  }
+}
+
+function toggleItemEditVisibility($container, visible) {
+  $container.getElementsByClassName('item_price')[0].hidden = !visible;
+  $container.getElementsByClassName('item_edit')[0].hidden = !visible;
+}
+
+function toggleItemDelete($container, del) {
+  const $comment = $container.getElementsByClassName('item_delete_comment')[0];
+  $comment.value = '';
+  $comment.hidden = del;
+
+  const $confirm = $container.getElementsByClassName('item_delete_confirm')[0];
+  $confirm.hidden = del;
+
+  const $delete = $container.getElementsByClassName('item_delete')[0];
+  $delete.setAttribute('delete', !del);
+  if (del) {
+    $delete.innerText = 'Delete';
+  } else {
+    $delete.innerText = 'Cancel';
+  }
+}
+
+function toggleUndoItemDelete($container, state) {
+  const $name = $container.getElementsByClassName('item_name')[0];
+  const $price = $container.getElementsByClassName('item_price')[0];
+  const $edit = $container.getElementsByClassName('item_edit')[0];
+  const $delete = $container.getElementsByClassName('item_delete')[0];
+  const $undo = $container.getElementsByClassName('item_delete_undo')[0];
+  const $confirm = $container.getElementsByClassName('item_delete_confirm')[0];
+
+  $price.hidden = state;
+  $edit.hidden = state;
+  $delete.hidden = state;
+  $undo.hidden = !state;
+  $confirm.hidden = state;
+
+  if (state) {
+    $name.classList.add('deleted');
+    $price.classList.add('deleted');
+  } else {
+    $name.classList.remove('deleted');
+    $price.classList.remove('deleted');
   }
 }
 
@@ -112,6 +207,27 @@ async function createItem(name, price) {
 async function saveItem(id, name, price) {
   const data = { id, name, price: parseInt(price) };
   await fetch('/items/api/v1', { 
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+}
+
+async function deleteItem(id, comment) {
+  const data = { id };
+  if (comment != '') {
+    data.comment = comment;
+  }
+  await fetch('/items/api/v1', { 
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+}
+
+async function undoItemDelete(id) {
+  const data = { id };
+  await fetch('/items/api/v1/undelete', { 
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
