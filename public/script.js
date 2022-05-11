@@ -3,11 +3,13 @@ window.onload = async (event) => {
   document.getElementById('create_button').addEventListener('click', newItem);
 };
 
+let ALL_ITEMS = [];
 async function renderInventory() {
   const $inventory = document.getElementById('inventory');
   const inventory = await fetchInventory();
 
   inventory.forEach(item => {
+    ALL_ITEMS.push(item);
     $inventory.appendChild(renderItem(item));
   });
 }
@@ -64,6 +66,11 @@ function renderItem(item) {
   $deleteUndo.hidden = true;
   $deleteUndo.addEventListener('click', (e) => onDeleteUndoClick(e, $container, item._id));  
 
+  const $deleteHistory = document.createElement('button');
+  $deleteHistory.classList.add('item_delete_history');
+  $deleteHistory.innerText = 'Deletion History';
+  $deleteHistory.addEventListener('click', (e) => onDeleteHistoryClick(e, item._id));  
+
   $container.appendChild($name);
   $container.appendChild($price);
   $container.appendChild($edit);
@@ -72,6 +79,7 @@ function renderItem(item) {
   $container.appendChild($deleteComment);
   $container.appendChild($deleteConfirm);
   $container.appendChild($deleteUndo);
+  $container.appendChild($deleteHistory)
   
   return $container;
 }
@@ -110,6 +118,34 @@ async function onDeleteUndoClick(e, $container, id) {
   await undoItemDelete(id);
   toggleUndoItemDelete($container, false);
   $container.getElementsByClassName('item_delete_confirm')[0].hidden = true;
+}
+
+async function onDeleteHistoryClick(e, id) {
+  const history = ALL_ITEMS.filter(i => i._id == id)[0].deletionHistory;
+  
+  const $table = document.getElementById('table_history');
+  const children = $table.querySelectorAll('tr');
+  for (let i = 1; i < children.length; i++) {
+    children[i].remove();
+  }
+
+
+  $table.hidden = false;
+  document.getElementById('delete_history').hidden = true;
+
+  history.forEach(h => {
+    $tr = document.createElement('tr')
+    
+    $date = document.createElement('td')
+    $date.innerText = h.date;
+
+    $comment = document.createElement('td')
+    $comment.innerText = h.comment;
+
+    $tr.appendChild($date);
+    $tr.appendChild($comment);
+    $table.appendChild($tr);
+  });
 }
 
 function toggleItemEdit($container, edit) {
@@ -197,11 +233,14 @@ async function newItem() {
 
 async function createItem(name, price) {
   const data = { name, price: parseInt(price) };
-  return (await fetch('/items/api/v1', { 
+  const response = await fetch('/items/api/v1', { 
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  })).json();
+  });
+  const newItem = await response.json();
+  ALL_ITEMS.push(newItem);
+  return newItem;
 }
 
 async function saveItem(id, name, price) {
@@ -218,11 +257,15 @@ async function deleteItem(id, comment) {
   if (comment != '') {
     data.comment = comment;
   }
-  await fetch('/items/api/v1', { 
+  const response = await fetch('/items/api/v1', { 
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   });
+  const updatedItem = await response.json();
+  console.log(ALL_ITEMS)
+  ALL_ITEMS = ALL_ITEMS.filter(i => i._id != updatedItem._id)
+  ALL_ITEMS.push(updatedItem);
 }
 
 async function undoItemDelete(id) {

@@ -63,3 +63,21 @@ button, input {
 #create_button {
     background-color: yellowgreen;
 }
+
+.administration, .history {
+    width: 50%;
+    float: left;
+}
+
+footer {
+    width: 100%;
+}
+
+#table_history {
+    border: 1px solid black;
+    width: 100%;
+}
+
+td {
+    border: 1px solid black;
+}

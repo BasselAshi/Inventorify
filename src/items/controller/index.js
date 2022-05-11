@@ -71,7 +71,7 @@ module.exports.deleteItem = async (res, parameters) => {
     
     await item.save();
 
-    return res.status(200).json(true);
+    return res.status(200).json(item);
   } catch (error) {
     return res.status(400).json({
       status: 400,
