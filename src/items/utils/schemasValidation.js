@@ -25,6 +25,8 @@ const schemas = {
   getItem: Joi.object().keys({
     id: Joi.objectId().required()
   }),
+
+  getItems: Joi.object().keys()
 };
 
 module.exports = schemas;

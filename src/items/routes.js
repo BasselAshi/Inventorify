@@ -46,4 +46,12 @@ router.get(
   }
 );
 
+router.get(
+  '/api/v1/all',
+  validateSchemas.inputs(schemas.getItems, 'body'),
+  (req, res) => {
+    controller.getItems(res, req.body);
+  }
+);
+
 module.exports = router;

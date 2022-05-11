@@ -126,3 +126,20 @@ module.exports.getItem = async (res, parameters) => {
     });
   }
 };
+
+module.exports.getItems = async (res, parameters) => {
+  try {
+    const items = await schemes.Item.find(
+      { $or: [
+        { currentDeletion: { $exists: false } }
+      , { currentDeletion: null }
+    ]});
+    return res.status(200).json(items);
+
+  } catch (error) {
+    return res.status(400).json({
+      status: 400,
+      message: error,
+    });
+  }
+};
