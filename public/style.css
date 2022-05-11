@@ -1,0 +1,12 @@
+h1.title {
+    margin-bottom: 0;
+}
+
+h5.title {
+    margin-top: 0;
+}
+
+.shopify {
+    color: green;
+    font-weight: bold;
+}
