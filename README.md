@@ -1,8 +1,8 @@
 <!-- PROJECT LOGO -->
 <p align="center">
-    <span style="font-size: 42px; font-weight: bold">Inventorify</span>
+    <b>Inventorify</b>
     <br />
-    <b>for a demo, go to <a target="_blank" href="https://inventorify.basselashi.repl.co/">https://repositorify.ga/</a></b>
+    <b>for a demo, go to <a target="_blank" href="https://inventorify.basselashi.repl.co/">https://Inventorify.basselashi.repl.co</a></b>
 </p
 
 <!-- ABOUT THE PROJECT -->
