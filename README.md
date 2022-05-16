@@ -30,7 +30,7 @@ The following prerequisites are based on the versions available in May 2022
 You may perform the following actions in Inventorify
 * Create new items
 * Modify existing items
-* Delete/Undelete items with comments
+* Delete/Undelete items with optional comments
 * View delete history of existing items
 
 <!-- CONTRIBUTING -->
