@@ -18,6 +18,7 @@ The first version of Inventorify took me less than 6 hours of development, it wa
 
 <!-- GETTING STARTED -->
 ## Getting Started
+* Migrate the database: `rails db:migrate`
 * Run the project: `rails server`
 
 ### Prerequisites
