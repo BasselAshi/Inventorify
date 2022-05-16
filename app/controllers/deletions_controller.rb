@@ -1,0 +1,2 @@
+class DeletionsController < ApplicationController
+end

@@ -1,0 +1,9 @@
+<h4>Deletion History for <span style="color: red;"><%= @item.name %></span></h4>
+
+<table class="table_history">
+  <tr>
+    <td>Date</td>
+    <td>Deletion</td>
+  </tr>
+  <%= render @item.deletions %>
+</table>

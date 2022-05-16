@@ -3,35 +3,28 @@
     <b>Inventorify</b>
     <br />
     <b>for a demo, go to <a target="_blank" href="https://inventorify.basselashi.repl.co/">https://Inventorify.basselashi.repl.co</a></b>
-</p
+</p>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 Inventorify is a project influenced by *Shopify Developer Intern Challenge*, a backend-focused challenge that allows an applicant to showcase their capabilities in an inventory management system. The idea of such a challenge is great because applicants are not limited to using a stack, or being limited to specific challenges. This is an opportunity for applicants to showcase not only their software development skills, but also their critical thinking!
 
-The first version of Inventorify took me less than 6 hours of development. The whole project is basically a collection of CRUD operations for inventory items as well as a history check for item deletion (only applicable to undeleted items).
+The whole project is basically a collection of CRUD operations for inventory items as well as a history check for item deletion (only applicable to undeleted items).
+
+The first version of Inventorify took me less than 6 hours of development, it was built using the MERN stack. For more information, check the `mern_stack` branch. After doing some research on Shopify, I found out that they appreciate Ruby on Rails. Hence, I made the decision of rebuilding Inventorify in Ruby on Rails with zero prior experience in this framework.
 
 ### Built With
-* Node.js
-* Express
-* Atlas MongoDB
-* Mongoose
-* MVC Architecture
-* Vanilla JS for frontend
+* Ruby on Rails
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-* Create a .env file in the root directory and define the MongoDB connection. The following is an example of Atlas connection
-  ```
-  dbUrlMongoDB=mongodb+srv://webapp:<PASSWORD_HIDDEN>@inventorify.q06cn.mongodb.net/inventorify?retryWrites=true&w=majority
-  ```
-* Run ```npm start```
-* Access the application at `localhost:5000`
+* Migrate the database: `rails db:migrate`
+* Run the project: `rails server`
 
 ### Prerequisites
 The following prerequisites are based on the versions available in May 2022
-* Node Package Manager (NPM)
+* Ruby
+* Rails
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -59,5 +52,5 @@ Distributed under the MIT License.
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-This projects could not have been done without the help of:
-* [Express Template](https://github.com/jstibenpb/nodejs-express-template): Inventorify's MVC structure is highly influenced by this
+As a beginner with Ruby and it's corresponding framework Rails, I would like to thank the Rails developers for the
+in-depth guide on [getting started](https://guides.rubyonrails.org/getting_started.html).

@@ -1,0 +1,26 @@
+<h4>Inventory Items</h4>
+
+<div class="nav">
+    <%= button_to "New Item", new_item_path, :method => "get", :class => "items_new" %>
+    <%= button_to "Deleted Items", "/items/deleted", :method => "get", :class => "items_deleted" %>
+</div>
+
+<% if @items.any? %>
+    <p>=------------ Name ------------=------------ Price ------------=</p>
+<% end %>
+
+<% @items.each do |item| %>
+    <div class="item">
+      <input class="item_name" disabled value="<%= item.name %>">
+      <input class="item_price" disabled value="<%= item.price %>">
+      <%= button_to "Modify", edit_item_path(item), :class => "item_edit", :method => "get" %>
+      <%= button_to "View Deletion History", item_path(item), :method => "get", :class => "item_view_history"  %>
+    </div>
+<% end %>
+
+<% if @deleted_successfully %>
+    <script>
+      alert("<%= @deleted_successfully %> has been deleted successfully.")
+    </script>
+<% end %>
+

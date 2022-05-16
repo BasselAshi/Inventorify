@@ -1,0 +1,20 @@
+<h4>Deleted Inventory Items</h4>
+
+<% if @items.any? %>
+  <p>=------------ Name ------------=------------- Price -------------=---- Deletion Comment ----=</p>
+<% end %>
+
+<% @items.each do |item| %>
+  <div>
+    <div class="item">
+      <input class="item_name" disabled value="<%= item.name %>">
+      <input class="item_price" disabled value="<%= item.price %>">
+      <input class="item_comment" disabled value="<%= item.deletion.comment %>"
+    </div>
+    <%= form_with model: item do |form| %>
+      <%= hidden_field_tag "item[deletion_id]", "nil"  %>
+      <%= form.submit "Undo Delete", class: "item_delete item_undelete" %>
+    <% end %>
+    <%= button_to "View Deletion History", item_path(item), :method => "get", :class => "item_view_history"  %>
+  </div>
+<% end %>

@@ -1,0 +1,24 @@
+<html>
+<head>
+  <title>Inventorify ~ Home</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+<a href="/">
+  <h1 class="title">~ Inventorify ~</h1>
+</a>
+<h5 class="title">a simple inventory management system</h5>
+
+<%= yield %>
+
+<footer>
+  made for <a href="https://shopify.com" target="_blank" class="shopify">shopify</a> by <a class="bassel" target="_blank" href="https://www.linkedin.com/in/basselashi/">Bassel Ashi</a>
+</footer>
+</body>
+</html>
