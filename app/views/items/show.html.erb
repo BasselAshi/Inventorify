@@ -1,7 +1,7 @@
 <h1><%= @item.name %></h1>
 
 <p><%= @item.price %></p>
-<p><%= @item.deleted %></p>
+<p><%= @item.deletion_id %></p>
 
 <ul>
   <li><%= link_to "Edit", edit_item_path(@item) %></li>
@@ -10,3 +10,9 @@
     turbo_confirm: "Are you sure?"
   } %></li>
 </ul>
+
+<h2>Comments</h2>
+<%= render @item.deletions %>
+
+<h2>Add a comment:</h2>
+<%= render 'deletions/form' %>

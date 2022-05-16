@@ -37,7 +37,8 @@ class ItemsController < ApplicationController
 
   def destroy
     @item = Item.find(params[:id])
-    @item.destroy
+    @item.deletion_id = @item.deletions.create(comment: "works!").id
+    @item.save
 
     redirect_to root_path, status: :see_other
   end
