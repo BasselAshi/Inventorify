@@ -2,7 +2,7 @@
 <p align="center">
     <b>Inventorify</b>
     <br />
-    <b>for a demo, go to <a target="_blank" href="https://inventorify.basselashi.repl.co/">https://Inventorify.basselashi.repl.co</a></b>
+    <b>for a demo, go to <a target="_blank" href="https://inventorify-app.basselashi.repl.co/">https://inventorify-app.basselashi.repl.co/</a></b>
 </p>
 
 <!-- ABOUT THE PROJECT -->
