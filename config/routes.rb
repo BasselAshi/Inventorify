@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "items#index"
 
-  resources :items do
-    resources :deletions
-  end
+  get "/items/deleted", to: "items#deleted"
+
+  resources :items
 end

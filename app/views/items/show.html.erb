@@ -1,18 +1,9 @@
-<h1><%= @item.name %></h1>
+<h4>Deletion History for <span style="color: red;"><%= @item.name %></span></h4>
 
-<p><%= @item.price %></p>
-<p><%= @item.deletion_id %></p>
-
-<ul>
-  <li><%= link_to "Edit", edit_item_path(@item) %></li>
-  <li><%= link_to "Destroy", item_path(@item), data: {
-    turbo_method: :delete,
-    turbo_confirm: "Are you sure?"
-  } %></li>
-</ul>
-
-<h2>Comments</h2>
-<%= render @item.deletions %>
-
-<h2>Add a comment:</h2>
-<%= render 'deletions/form' %>
+<table class="table_history">
+  <tr>
+    <td>Date</td>
+    <td>Deletion</td>
+  </tr>
+  <%= render @item.deletions %>
+</table>

@@ -1,0 +1,106 @@
+h1.title {
+    margin-bottom: 0;
+}
+
+h5.title {
+    margin-top: 0 !important;
+}
+
+button, input {
+    padding: 5px 8px;
+    border-radius: 5px;
+}
+
+.item_name {
+    margin-right: 5px;
+}
+
+.shopify {
+    color: green;
+    font-weight: bold;
+}
+
+.bassel {
+    color: blue;
+}
+
+#create {
+    padding: 15px 0;
+}
+
+.item {
+    margin-bottom: 5px;
+}
+
+.item_delete, .item_undelete {
+    background-color: lightcoral;
+}
+
+.item_undelete {
+    margin-left: 5px
+}
+
+.item_delete_confirm {
+    background-color: red;
+    color: white;
+    margin-left: 5px;
+}
+
+.item_edit, .item_save {
+    margin-left: 5px;
+}
+
+.item_save {
+    background-color: lightgoldenrodyellow;
+}
+
+.deleted {
+    background-color: lightcoral;
+}
+
+.item_delete_undo {
+    background-color: yellow;
+}
+
+.item_view_history {
+    background-color: lightsteelblue;
+}
+
+#create_button {
+    background-color: yellowgreen;
+}
+
+.administration, .history {
+    width: 50%;
+    float: left;
+}
+
+footer {
+    width: 100%;
+    margin-top: 15px;
+}
+
+#table_history {
+    border: 1px solid black;
+    width: 100%;
+}
+
+td {
+    border: 1px solid black;
+}
+
+form {
+    display: inline;
+}
+
+.items_new {
+    background-color: yellowgreen;
+}
+
+.items_deleted {
+    background-color: darkorange;
+}
+
+.nav {
+    margin-bottom: 15px;
+}

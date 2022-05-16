@@ -1,21 +1,23 @@
+<style>
+  div {
+      display: inline;
+  }
+</style>
+
 <%= form_with model: item do |form| %>
-    <div>
-      <%= form.label :name %><br>
-      <%= form.text_field :name %>
-      <% item.errors.full_messages_for(:name).each do |message| %>
-        <div><%= message %></div>
-      <% end %>
-    </div>
-  
-    <div>
-      <%= form.label :price %><br>
-      <%= form.text_area :price %>
-      <% item.errors.full_messages_for(:price).each do |message| %>
-        <div><%= message %></div>
-      <% end %>
-    </div>
-  
-    <div>
-      <%= form.submit %>
-    </div>
+  <%= form.text_field :name, class: "item_name", placeholder: "Name" %>
+  <% item.errors.full_messages_for(:name).each do |message| %>
+    <script>
+      alert("<%= message %>")
+    </script>
   <% end %>
+
+  <%= form.number_field :price, class: "item_price", placeholder: "Price" %>
+  <% item.errors.full_messages_for(:price).each do |message| %>
+    <script>
+        alert("<%= message %>")
+    </script>
+  <% end %>
+
+  <%= form.submit %>
+<% end %>
